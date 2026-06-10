@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>705a5118-6e8f-44ce-a071-8ef186edeba3</UserSecretsId>
+    <NoWarn>NU1107;NU1608</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +14,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0-preview.4" />
+    <PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

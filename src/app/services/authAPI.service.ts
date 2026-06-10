@@ -1,28 +1,29 @@
 import { inject, Injectable } from "@angular/core";
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, tap } from "rxjs";
 import { Router } from "@angular/router";
 import { Admin } from "../models/Admin.model";
 import { Organizer } from "../models/organizers.model";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiAuthService {
   http: HttpClient = inject(HttpClient);
-  baseUrl: string = 'https://localhost:7087/api';
-  baseLoginURL: string = 'https://localhost:7087/api/auth/login';
+  baseUrl: string = `${environment.apiUrl}/api`;
+  baseLoginURL: string = `${environment.apiUrl}/api/auth/login`;
   user = new BehaviorSubject<Admin | null>(null);
   router: Router = inject(Router);
   userID: any;
 
   login(email, password) {
-    const data = {email: email, password: password};
+    const data = { email: email, password: password };
     return this.http.post<Admin>(this.baseLoginURL, data)
-    .pipe(tap((res) => {
-      this.handleCreateUser(res);
-      localStorage.setItem('userID', JSON.stringify(res.adminId));
-    }))
+      .pipe(tap((res) => {
+        this.handleCreateUser(res);
+        localStorage.setItem('userID', JSON.stringify(res.adminId));
+      }))
   }
 
   autoLogin() {
@@ -48,7 +49,7 @@ export class ApiAuthService {
 
   handleCreateUser(res: Admin) {
     const expiresIn = new Date(res.expiresAt);
-    const user = new Admin(res.email, res.username, res.role , res.adminId, res.organizerId, expiresIn, res.token);
+    const user = new Admin(res.email, res.username, res.role, res.adminId, res.organizerId, expiresIn, res.token);
     localStorage.setItem('user', JSON.stringify(user));
     this.user.next(user);
   }

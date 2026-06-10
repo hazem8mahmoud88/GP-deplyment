@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add JWT Authentication FIRST (before Identity)
 var jwtOptions = builder.Configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()!;
@@ -90,6 +90,7 @@ builder.Services.AddScoped<IElectionService, ElectionService>();
 builder.Services.AddScoped<ICandidateService, CandidateService>();
 builder.Services.AddScoped<IElectionOrganizerService, ElectionOrganizerService>();
 builder.Services.AddScoped<IVoterUploadService, VoterUploadService>();
+builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
 // Add HttpClient for face recognition
 builder.Services.AddHttpClient("FaceRecognition", client =>
 {
@@ -141,6 +142,13 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+// Auto-create database schema and seed data on startup
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await dbContext.Database.EnsureCreatedAsync();
+}
 
 // Seed database (creates default admin if not exists)
 await app.Services.SeedDatabaseAsync();

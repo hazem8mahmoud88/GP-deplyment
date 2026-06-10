@@ -9,7 +9,7 @@ using SecureVote.Persistence;
 
 namespace SecureVote.Services;
 
-public class VoterUploadService(ApplicationDbContext context, IWebHostEnvironment environment) : IVoterUploadService
+public class VoterUploadService(ApplicationDbContext context, ICloudinaryService cloudinaryService) : IVoterUploadService
 {
     public async Task<Result<UploadVotersResponse>> UploadVotersCsvAsync(int electionId, IFormFile csvFile, int organizerId)
     {
@@ -210,10 +210,6 @@ public class VoterUploadService(ApplicationDbContext context, IWebHostEnvironmen
         if (election.Status != ElectionStatus.Draft)
             return Result.Failure<UploadPhotosResponse>(OrganizerErrors.ElectionNotActive);
 
-        // Create photos directory
-        var photosPath = Path.Combine(environment.ContentRootPath, "uploads", "voters", electionId.ToString());
-        Directory.CreateDirectory(photosPath);
-
         var totalPhotos = 0;
         var matchedPhotos = 0;
         var unmatchedFiles = new List<string>();
@@ -245,16 +241,17 @@ public class VoterUploadService(ApplicationDbContext context, IWebHostEnvironmen
                     continue;
                 }
 
-                // Save photo
+                // Upload photo to Cloudinary
                 var fileName = $"{uniqueId}{extension}";
-                var filePath = Path.Combine(photosPath, fileName);
-
                 using var entryStream = entry.Open();
-                using var fileStream = new FileStream(filePath, FileMode.Create);
-                await entryStream.CopyToAsync(fileStream);
+                var cloudinaryUrl = await cloudinaryService.UploadImageAsync(
+                    entryStream,
+                    fileName,
+                    $"voters/{electionId}"
+                );
 
                 // Update voter photo URL
-                voter.PhotoUrl = $"/uploads/voters/{electionId}/{fileName}";
+                voter.PhotoUrl = cloudinaryUrl;
                 matchedPhotos++;
             }
 

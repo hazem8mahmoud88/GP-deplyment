@@ -1,6 +1,6 @@
 namespace SecureVote.Services;
 
-public class CandidateService(ApplicationDbContext context) : ICandidateService
+public class CandidateService(ApplicationDbContext context, ICloudinaryService cloudinaryService) : ICandidateService
 {
     public async Task<Result<CandidateResponse>> CreateAsync(int electionId, CreateCandidateRequest request, int organizerId)
     {
@@ -150,12 +150,12 @@ public class CandidateService(ApplicationDbContext context) : ICandidateService
         if (candidate.Election.Status != ElectionStatus.Draft)
             return Result.Failure(CandidateErrors.ElectionNotDraft);
 
-        // Delete photo file from disk if exists
+        // Delete old photo from Cloudinary if exists
         if (!string.IsNullOrEmpty(candidate.PhotoPath))
         {
-            var photoFullPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", candidate.PhotoPath.TrimStart('/').Replace("/uploads/", ""));
-            if (File.Exists(photoFullPath))
-                File.Delete(photoFullPath);
+            // Extract public_id from Cloudinary URL for deletion
+            var publicId = $"securevote/candidates/{candidate.ElectionId}/{candidate.Id}";
+            await cloudinaryService.DeleteImageAsync(publicId);
         }
 
         context.Candidates.Remove(candidate);
@@ -184,29 +184,20 @@ public class CandidateService(ApplicationDbContext context) : ICandidateService
         if (extension != ".jpg" && extension != ".jpeg" && extension != ".png")
             return Result.Failure<CandidateResponse>(CandidateErrors.InvalidPhotoFormat);
 
-        // Delete old photo if exists (handles extension change: jpg → png)
+        // Delete old photo from Cloudinary if exists
         if (!string.IsNullOrEmpty(candidate.PhotoPath))
         {
-            var oldPhotoPath = Path.Combine(Directory.GetCurrentDirectory(), candidate.PhotoPath.TrimStart('/'));
-            if (File.Exists(oldPhotoPath))
-                File.Delete(oldPhotoPath);
+            var oldPublicId = $"securevote/candidates/{candidate.ElectionId}/{candidate.Id}";
+            await cloudinaryService.DeleteImageAsync(oldPublicId);
         }
 
-        // Create directory if not exists
-        var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", "candidates", candidate.ElectionId.ToString());
-        Directory.CreateDirectory(uploadsPath);
-
-        // Save file with candidate ID as filename
+        // Upload new photo to Cloudinary
         var fileName = $"{candidate.Id}{extension}";
-        var filePath = Path.Combine(uploadsPath, fileName);
-
-        using (var stream = new FileStream(filePath, FileMode.Create))
-        {
-            await photo.CopyToAsync(stream);
-        }
+        using var photoStream = photo.OpenReadStream();
+        var cloudinaryUrl = await cloudinaryService.UploadImageAsync(photoStream, fileName, $"candidates/{candidate.ElectionId}");
 
         // Update candidate photo path
-        candidate.PhotoPath = $"/uploads/candidates/{candidate.ElectionId}/{fileName}";
+        candidate.PhotoPath = cloudinaryUrl;
         await context.SaveChangesAsync();
 
         return Result.Success(MapToResponse(candidate));

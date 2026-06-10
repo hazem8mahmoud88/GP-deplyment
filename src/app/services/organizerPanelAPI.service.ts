@@ -1,12 +1,13 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
+import { environment } from "../../environments/environment";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrganizerPanel {
-  baseUrl: string = 'https://localhost:7087/api'
+  baseUrl: string = `${environment.apiUrl}/api`
   httpClient: HttpClient = inject(HttpClient);
 
   getOrganizerElections(id: number) {
@@ -25,7 +26,7 @@ export class OrganizerPanel {
     return this.httpClient.post(`${this.baseUrl}/organizer/elections/${electionID}/upload-photos`, formData);
   }
 
-  addCandidates(electionID: string,fullName: string, symbol: string, partyName: string, candidateNum: string) {
+  addCandidates(electionID: string, fullName: string, symbol: string, partyName: string, candidateNum: string) {
     const data = {
       fullName: fullName,
       symbol: symbol,
@@ -40,7 +41,7 @@ export class OrganizerPanel {
     return this.httpClient.get(`${this.baseUrl}/elections/${electionID}/Candidates`);
   }
 
-  deleteCandidate(electionID: string,candidateID: number) {
+  deleteCandidate(electionID: string, candidateID: number) {
     return this.httpClient.delete(`${this.baseUrl}/elections/${electionID}/Candidates/${candidateID}`)
   }
 

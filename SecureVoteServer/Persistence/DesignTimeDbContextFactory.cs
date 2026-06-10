@@ -10,7 +10,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<Applicatio
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
         
         // Use a hardcoded connection string for design-time operations
-        optionsBuilder.UseSqlServer("Server=.;Database=SecureVoteDb;Trusted_Connection=true;TrustServerCertificate=true");
+        optionsBuilder.UseNpgsql("Host=localhost;Database=SecureVoteDb;Username=postgres;Password=postgres");
 
         return new ApplicationDbContext(optionsBuilder.Options);
     }

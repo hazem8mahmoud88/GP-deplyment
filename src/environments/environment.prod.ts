@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://YOUR_RAILWAY_URL.railway.app'
+    apiUrl: 'https://gp-deplyment-production-2207.up.railway.app'
 };

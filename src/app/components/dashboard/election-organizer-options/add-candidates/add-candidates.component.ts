@@ -39,7 +39,7 @@ export class AddCandidatesComponent implements OnInit {
         // Convert relative paths to absolute backend URLs
         this.candidates = this.candidates.map(candidate => ({
           ...candidate,
-          photoPath: candidate.photoPath ? `http://localhost:5197${candidate.photoPath}` : candidate.photoPath
+          photoPath: candidate.photoPath || null
         }));
         console.log(this.candidates);
       },

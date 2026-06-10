@@ -336,8 +336,8 @@ public class VoterUploadService(ApplicationDbContext context, ICloudinaryService
     {
         if (string.IsNullOrWhiteSpace(value)) return null;
         
-        if (DateTime.TryParse(value.Trim(), CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
-            return date;
+        if (DateTime.TryParse(value.Trim(), CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal, out var date))
+            return DateTime.SpecifyKind(date, DateTimeKind.Utc);
         
         return null;
     }

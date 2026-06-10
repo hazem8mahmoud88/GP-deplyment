@@ -56,7 +56,7 @@ public class BallotConfiguration : IEntityTypeConfiguration<Ballot>
         // Unique constraint on ElectionVoterId (when not null)
         builder.HasIndex(x => x.ElectionVoterId)
             .IsUnique()
-            .HasFilter("[ElectionVoterId] IS NOT NULL");
+            .HasFilter("\"ElectionVoterId\" IS NOT NULL");
     }
 }
 

@@ -1,0 +1,129 @@
+.container {
+  min-height: calc(100vh - 316px);
+  margin-top: 30px;
+}
+
+.sidebar {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  padding: 8px;
+  border-radius: 0 14px 14px 0;
+  margin-left: 15px;
+  border-left: 2px solid #224abe;
+  background: #fff;
+  width: 25%;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  cursor: pointer;
+  padding: 12px 14px;
+  border: none;
+  border-bottom: 1px solid #f0f2f5;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+ul li svg {
+  flex-shrink: 0;
+  opacity: 0.6;
+  transition: all 0.2s;
+}
+
+ul li:hover {
+  background: #eef2ff;
+  color: #224abe;
+}
+
+ul li:hover svg {
+  opacity: 1;
+  stroke: #224abe;
+}
+
+ul li.active {
+  background: linear-gradient(135deg, #224abe, #2d6ade);
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(34, 74, 190, 0.25);
+}
+
+ul li.active svg {
+  opacity: 1;
+  stroke: #fff;
+}
+
+@media (max-width: 992px) {
+
+  ul li span,
+  .count-votes-btn span {
+    display: none;
+  }
+
+  ul li {
+    text-align: center;
+    justify-content: center;
+    padding: 12px 10px;
+  }
+
+  .count-votes-btn {
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .sidebar {
+    width: auto !important;
+  }
+}
+
+.count-votes-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px 14px;
+  margin-top: auto;
+  border: 1.5px solid #c7d2fe;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+  color: #3730a3;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.count-votes-btn:hover {
+  background: linear-gradient(135deg, #4f46e5, #3730a3);
+  color: #fff;
+  border-color: #4f46e5;
+  box-shadow: 0 4px 16px rgba(79, 70, 229, 0.35);
+  transform: translateY(-1px);
+}
+
+.count-votes-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.2);
+}
+
+.count-votes-btn svg {
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: all 0.3s;
+}
+
+.count-votes-btn:hover svg {
+  opacity: 1;
+  stroke: #fff;
+}

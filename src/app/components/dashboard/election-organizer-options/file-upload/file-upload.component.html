@@ -1,0 +1,60 @@
+<app-message-box [showSuccess]="successMessage" [showError]="errorMessage"></app-message-box>
+<div class="container upload-container fade-in">
+  <div class="upload-header">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#224abe" stroke-width="2"
+      stroke-linecap="round">
+      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+      <polyline points="17 8 12 3 7 8" />
+      <line x1="12" y1="3" x2="12" y2="15" />
+    </svg>
+    <span>رفع الملفات</span>
+  </div>
+
+  <div class="upload-box-container">
+    <div class="upload-zone upload-voters">
+      <label>
+        <input type="file" accept=".csv" (change)="onFileSelected($event, 'votersFile')" hidden>
+        <div class="upload-zone-inner">
+          <svg class="upload-icon" viewBox="0 0 48 48" fill="none">
+            <rect x="8" y="6" width="32" height="36" rx="4" stroke="#224abe" stroke-width="2" fill="#eef2ff" />
+            <path d="M16 22h16M16 28h10" stroke="#224abe" stroke-width="2" stroke-linecap="round" />
+            <circle cx="36" cy="36" r="10" fill="#224abe" />
+            <path d="M36 31v10M31 36h10" stroke="white" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          <p class="upload-title">اضافه الناخبين</p>
+          <p class="upload-format">.csv</p>
+          <b class="file-name" *ngIf="votersFileName">{{votersFileName}}</b>
+        </div>
+      </label>
+    </div>
+
+    <div class="upload-zone upload-photos">
+      <label>
+        <input type="file" accept=".zip" (change)="onFileSelected($event, 'photosFile')" hidden>
+        <div class="upload-zone-inner">
+          <svg class="upload-icon" viewBox="0 0 48 48" fill="none">
+            <rect x="6" y="10" width="36" height="28" rx="4" stroke="#224abe" stroke-width="2" fill="#eef2ff" />
+            <circle cx="18" cy="22" r="4" stroke="#224abe" stroke-width="2" fill="none" />
+            <path d="M6 34l10-8 8 6 8-6 10 8" stroke="#224abe" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" fill="none" />
+            <circle cx="38" cy="36" r="8" fill="#224abe" />
+            <path d="M38 32v8M34 36h8" stroke="white" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          <p class="upload-title">اضافه صور الناخبين</p>
+          <p class="upload-format">.zip</p>
+          <b class="file-name" *ngIf="photosFileName">{{photosFileName}}</b>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <button class="submit-btn" (click)="upload()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round">
+      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+      <polyline points="17 8 12 3 7 8" />
+      <line x1="12" y1="3" x2="12" y2="15" />
+    </svg>
+    حفظ
+  </button>
+</div>

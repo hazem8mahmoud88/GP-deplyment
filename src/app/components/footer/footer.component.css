@@ -1,0 +1,142 @@
+.v-footer {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    direction: rtl !important;
+    text-align: right;
+    margin-top: 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.v-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #224abe, #2d7aed, #60a5fa, #2d7aed, #224abe);
+    background-size: 200% auto;
+    animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
+
+.footer-section {
+    animation: fadeInUp 0.5s ease-out both;
+}
+
+.footer-section:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.footer-section:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.footer-brand {
+    margin-bottom: 12px;
+}
+
+.footer-brand svg {
+    filter: drop-shadow(0 2px 8px rgba(96, 165, 250, 0.3));
+}
+
+.footer-desc {
+    line-height: 1.9;
+    opacity: 0.8;
+    font-size: 0.88rem;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: #d1d5db;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.footer-links a::before {
+    content: '';
+    width: 0;
+    height: 2px;
+    background: #60a5fa;
+    transition: width 0.25s ease;
+    display: inline-block;
+}
+
+.footer-links a:hover {
+    color: #60a5fa;
+}
+
+.footer-links a:hover::before {
+    width: 16px;
+}
+
+/* Contact items */
+.contact-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    opacity: 0.85;
+}
+
+/* Social Icons */
+.social-icons .social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: #d1d5db;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.social-icons .social-icon:hover {
+    color: #fff;
+    background: rgba(96, 165, 250, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(96, 165, 250, 0.25);
+}
+
+/* Divider */
+.footer-divider {
+    height: 1px;
+    background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.1), transparent);
+    margin: 24px 0 16px;
+}
+
+.copyright {
+    opacity: 0.5;
+    font-size: 0.82rem;
+}

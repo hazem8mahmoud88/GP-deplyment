@@ -1,0 +1,80 @@
+<app-message-box [showSuccess]="successMessage" [showError]="errorMessage"></app-message-box>
+<div class="container my-4">
+  <div class="edit-card">
+    <!-- Header -->
+    <div class="edit-header">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+        stroke-linecap="round">
+        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+      </svg>
+      <h5>تعديل الانتخابات</h5>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="editElectionForm" (ngSubmit)="onSubmit()" class="edit-body">
+
+      <!-- Row 1 -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <div class="form-field">
+            <label class="form-label">العنوان</label>
+            <input formControlName="title" type="text" class="custom-input" placeholder="العنوان">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-field">
+            <label class="form-label">النوع</label>
+            <div class="select-wrapper">
+              <select class="custom-select" formControlName="type">
+                <option [ngValue]="electionType" disabled>{{electionType}}</option>
+                <option [ngValue]="'رئاسي'">رئاسي</option>
+                <option [ngValue]="'نقابي'">نقابي</option>
+                <option [ngValue]="'أخري'">أخري</option>
+              </select>
+              <svg class="select-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999"
+                stroke-width="2">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <div class="form-field">
+            <label class="form-label">تاريخ البدء</label>
+            <input formControlName="startDate" type="date" class="custom-input">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-field">
+            <label class="form-label">تاريخ الانتهاء</label>
+            <input formControlName="endDate" type="date" class="custom-input">
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="form-field">
+        <label class="form-label">الوصف</label>
+        <textarea formControlName="description" class="custom-textarea" placeholder="الوصف"></textarea>
+      </div>
+
+      <!-- Actions -->
+      <button type="submit" class="submit-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round">
+          <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+          <polyline points="17 21 17 13 7 13 7 21" />
+          <polyline points="7 3 7 8 15 8" />
+        </svg>
+        حفظ
+      </button>
+
+    </form>
+  </div>
+</div>

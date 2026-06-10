@@ -1,0 +1,245 @@
+/* ============================
+   Overlay
+   ============================ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.overlay.active {
+  display: flex;
+}
+
+/* ============================
+   Modal Card
+   ============================ */
+.floating-form {
+  background: #fff;
+  width: 95%;
+  max-width: 550px;
+  border-radius: 16px;
+  position: relative;
+  animation: scaleIn 0.3s ease-out;
+  direction: rtl;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================
+   Modal Header
+   ============================ */
+.modal-header-custom {
+  background: linear-gradient(135deg, #1a2a6c, #224abe);
+  color: #fff;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-header-custom h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  flex: 1;
+}
+
+.close-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.2s;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+/* ============================
+   Modal Body
+   ============================ */
+.modal-body-custom {
+  padding: 24px;
+}
+
+.form-field {
+  margin-bottom: 16px;
+}
+
+.form-field .form-label {
+  display: block;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 5px;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 11px 44px 11px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  color: #374151;
+  background: #fafbfc;
+  transition: all 0.25s ease;
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: #224abe;
+  box-shadow: 0 0 0 3px rgba(34, 74, 190, 0.1);
+  background: #fff;
+}
+
+.select-wrapper {
+  position: relative;
+}
+
+.custom-select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  color: #374151;
+  background: #fafbfc;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.custom-select:focus {
+  outline: none;
+  border-color: #224abe;
+  box-shadow: 0 0 0 3px rgba(34, 74, 190, 0.1);
+}
+
+.select-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.custom-textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  color: #374151;
+  background: #fafbfc;
+  transition: all 0.25s ease;
+  resize: vertical;
+}
+
+.custom-textarea:focus {
+  outline: none;
+  border-color: #224abe;
+  box-shadow: 0 0 0 3px rgba(34, 74, 190, 0.1);
+  background: #fff;
+}
+
+.custom-input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  color: #374151;
+  background: #fafbfc;
+  transition: all 0.25s ease;
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: #224abe;
+  box-shadow: 0 0 0 3px rgba(34, 74, 190, 0.1);
+}
+
+.dates-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.form-divider {
+  height: 1px;
+  background: linear-gradient(to left, transparent, #e5e7eb, transparent);
+  margin: 18px 0;
+}
+
+/* ============================
+   Submit Button
+   ============================ */
+.submit-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  background: linear-gradient(135deg, #224abe, #2d6ade);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(34, 74, 190, 0.25);
+}
+
+.submit-btn:hover {
+  background: linear-gradient(135deg, #1b3e9e, #2460c4);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(34, 74, 190, 0.35);
+}

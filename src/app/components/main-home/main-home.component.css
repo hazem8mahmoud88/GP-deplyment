@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap');
+
+* {
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+
+/* ============================
+   Hero Section
+   ============================ */
+
+.home-section {
+  background: linear-gradient(135deg, #0f1a3c 0%, #1a3a9e 40%, #224abe 70%, #2d7aed 100%);
+  min-height: 82vh;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  padding: 60px 20px;
+  margin-bottom: 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Decorative floating dots */
+.hero-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.hero-dot-1 {
+  width: 200px;
+  height: 200px;
+  top: -60px;
+  left: 5%;
+  animation: float 6s ease-in-out infinite;
+}
+
+.hero-dot-2 {
+  width: 100px;
+  height: 100px;
+  bottom: 10%;
+  right: 10%;
+  animation: float 5s ease-in-out infinite 1s;
+}
+
+.hero-dot-3 {
+  width: 60px;
+  height: 60px;
+  top: 40%;
+  left: 60%;
+  animation: float 4s ease-in-out infinite 0.5s;
+}
+
+.hero-dot-4 {
+  width: 40px;
+  height: 40px;
+  top: 20%;
+  left: 30%;
+  animation: float 3.5s ease-in-out infinite 1.5s;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.home-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero Badge */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  margin-bottom: 16px;
+  width: fit-content;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Text */
+.home-section h1 {
+  font-size: 2.6rem;
+  animation: fadeInUp 0.6s ease-out 0.1s both;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  letter-spacing: 1px;
+}
+
+.home-section .lead {
+  font-size: 1.1rem;
+  opacity: 0.85;
+  line-height: 1.8;
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+h1,
+p {
+  padding: 8px 0;
+}
+
+/* Hero Image */
+.hero-image {
+  animation: float 5s ease-in-out infinite;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
+}
+
+/* Hero Features */
+.hero-features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.hero-feature-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 8px 0;
+}
+
+.hero-feature-item svg {
+  color: #5eead4;
+  flex-shrink: 0;
+}
+
+.error-text {
+  color: #fca5a5;
+  font-size: 14px;
+}
+
+/* ============================
+   Responsive
+   ============================ */
+@media (max-width: 992px) {
+  .left-picture {
+    display: none !important;
+  }
+
+  .text h1 {
+    font-size: 1.8rem;
+  }
+
+  .text p {
+    font-size: 1rem;
+  }
+
+  .home-section {
+    min-height: 70vh;
+    padding: 40px 16px;
+  }
+}

@@ -1,0 +1,1559 @@
+/* ============================================================
+   ELECTION STATS – Complete Styles
+   ============================================================ */
+
+/* ─── Page Container ─── */
+.stats-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+  padding-bottom: 60px;
+}
+
+/* ============================================================
+   GRADIENT HEADER BANNER
+   ============================================================ */
+.stats-header {
+  position: relative;
+  background: linear-gradient(135deg, #1a2a6c 0%, #224abe 50%, #2d6ade 100%);
+  padding: 36px 0 40px;
+  overflow: hidden;
+}
+
+/* Animated decorative shapes behind header */
+.header-bg-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.shape-1 {
+  width: 200px;
+  height: 200px;
+  top: -60px;
+  left: 10%;
+  animation: float 6s ease-in-out infinite;
+}
+
+.shape-2 {
+  width: 140px;
+  height: 140px;
+  bottom: -40px;
+  right: 15%;
+  animation: float 8s ease-in-out infinite 1s;
+}
+
+.shape-3 {
+  width: 80px;
+  height: 80px;
+  top: 20%;
+  right: 30%;
+  animation: float 5s ease-in-out infinite 0.5s;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+.header-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.election-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.header-badges {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.h-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.type-badge {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.status-badge {
+  color: #fff;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-active {
+  background: rgba(16, 185, 129, 0.85);
+}
+
+.status-active .status-dot {
+  background: #6ee7b7;
+  box-shadow: 0 0 6px #6ee7b7;
+  animation: pulse-dot 1.5s infinite;
+}
+
+.status-closed {
+  background: rgba(107, 114, 128, 0.8);
+}
+
+.status-closed .status-dot {
+  background: #d1d5db;
+}
+
+.status-draft {
+  background: rgba(234, 179, 8, 0.85);
+  color: #1a1a1a;
+}
+
+.status-draft .status-dot {
+  background: #fbbf24;
+}
+
+@keyframes pulse-dot {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ============================================================
+   MAIN BODY & CONTAINER
+   ============================================================ */
+.stats-body {
+  margin-top: -20px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================================
+   TAB NAVIGATION
+   ============================================================ */
+.tabs-wrapper {
+  margin-bottom: 28px;
+}
+
+.tabs-nav {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tabs-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border: 1px solid var(--border, #e8edf6);
+  border-radius: var(--radius-md, 12px);
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--text-secondary, #6b7b99);
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.tab-btn:hover {
+  background: var(--primary-bg, #eef2ff);
+  color: var(--primary, #224abe);
+  border-color: var(--primary-bg-hover, #dde5ff);
+  transform: translateY(-1px);
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #224abe, #2d6ade);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 16px rgba(34, 74, 190, 0.3);
+  transform: translateY(-1px);
+}
+
+.tab-btn.active svg {
+  stroke: #fff;
+}
+
+/* ============================================================
+   GLASS CARD BASE
+   ============================================================ */
+.glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius-lg, 16px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  box-shadow: 0 8px 32px rgba(34, 74, 190, 0.08);
+}
+
+.card-title-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid #f0f2f8;
+}
+
+.card-title-bar h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary, #2d3447);
+}
+
+/* ============================================================
+   TAB PANEL ANIMATION
+   ============================================================ */
+.tab-panel {
+  animation: fadeInUp 0.45s ease-out both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.45s ease-out both;
+}
+
+/* ============================================================
+   SUMMARY STAT CARDS
+   ============================================================ */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-bottom: 8px;
+}
+
+.summary-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius-lg, 16px);
+  padding: 20px 22px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+.summary-card:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.summary-card:nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.summary-card:nth-child(3) {
+  animation-delay: 160ms;
+}
+
+.summary-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(34, 74, 190, 0.1);
+}
+
+.summary-card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.votes-icon {
+  background: linear-gradient(135deg, #224abe, #2d6ade);
+  box-shadow: 0 4px 12px rgba(34, 74, 190, 0.3);
+}
+
+.candidates-icon {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.type-icon {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.summary-card-data {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.summary-card-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-primary, #2d3447);
+  line-height: 1.2;
+}
+
+.summary-card-value.text-val {
+  font-size: 1.1rem;
+}
+
+.summary-card-label {
+  font-size: 0.82rem;
+  color: var(--text-secondary, #6b7b99);
+  font-weight: 500;
+}
+
+/* ============================================================
+   DONUT CHART
+   ============================================================ */
+.chart-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.donut-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.donut-svg {
+  width: 210px;
+  height: 210px;
+  transform: rotate(-90deg);
+}
+
+.donut-bg {
+  fill: transparent;
+  stroke: #eef2ff;
+  stroke-width: 4;
+}
+
+.donut-segment {
+  fill: transparent;
+  stroke-width: 4;
+  stroke-linecap: butt;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.donut-center-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.donut-center-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary, #2d3447);
+  line-height: 1;
+}
+
+.donut-center-text {
+  font-size: 0.82rem;
+  color: var(--text-secondary, #6b7b99);
+  font-weight: 500;
+}
+
+/* Legend */
+.chart-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid #f0f2f8;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.legend-name {
+  flex: 1;
+  color: var(--text-primary, #2d3447);
+  font-weight: 500;
+}
+
+.legend-pct {
+  font-weight: 700;
+  color: var(--text-primary, #2d3447);
+  font-size: 0.88rem;
+}
+
+/* ============================================================
+   CANDIDATE RANKINGS
+   ============================================================ */
+.rankings-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.candidates-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.candidate-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md, 12px);
+  background: #fafbfd;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+.candidate-row:hover {
+  background: #f0f4ff;
+  border-color: #e8edf6;
+}
+
+.winner-row {
+  background: linear-gradient(135deg, rgba(34, 74, 190, 0.04), rgba(45, 106, 222, 0.08)) !important;
+  border: 1px solid rgba(34, 74, 190, 0.15) !important;
+  box-shadow: 0 2px 12px rgba(34, 74, 190, 0.06);
+}
+
+/* Rank Badge */
+.candidate-rank {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: var(--text-secondary, #6b7b99);
+  background: #eef1f8;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.crown-icon {
+  position: absolute;
+  top: -14px;
+  font-size: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.rank-gold {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(245, 158, 11, 0.3);
+}
+
+.rank-silver {
+  background: linear-gradient(135deg, #9ca3af, #6b7280);
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(107, 114, 128, 0.25);
+}
+
+.rank-bronze {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(217, 119, 6, 0.25);
+}
+
+/* Avatar */
+.candidate-avatar-wrapper {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.candidate-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+  border-radius: 50%;
+}
+
+.avatar-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+/* Candidate Info */
+.candidate-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.candidate-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary, #2d3447);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.candidate-party {
+  font-size: 0.78rem;
+  color: var(--text-secondary, #6b7b99);
+  font-weight: 500;
+}
+
+/* Candidate Result Bar */
+.candidate-result {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 120px;
+}
+
+.result-numbers {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+}
+
+.vote-count-num {
+  font-weight: 700;
+  color: var(--text-primary, #2d3447);
+}
+
+.vote-label {
+  color: var(--text-secondary, #6b7b99);
+  font-weight: 500;
+}
+
+.pct-badge {
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-right: auto;
+}
+
+/* Shared Bar Track/Fill */
+.bar-track {
+  height: 8px;
+  background: #eef1f8;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 3px;
+}
+
+/* ============================================================
+   GOVERNORATE TAB
+   ============================================================ */
+.gov-pills-wrapper {
+  margin-bottom: 24px;
+}
+
+.gov-pills {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.gov-pills::-webkit-scrollbar {
+  display: none;
+}
+
+.gov-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border: 1px solid var(--border, #e8edf6);
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--text-secondary, #6b7b99);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.gov-pill:hover {
+  background: var(--primary-bg, #eef2ff);
+  color: var(--primary, #224abe);
+  border-color: #c7d2fe;
+}
+
+.gov-pill.active {
+  background: linear-gradient(135deg, #224abe, #2d6ade);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(34, 74, 190, 0.3);
+}
+
+.gov-pill.active svg {
+  stroke: #fff;
+}
+
+/* Governorate Results Card */
+.gov-results-card {
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+.gov-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #f0f2f8;
+}
+
+.gov-title-area {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.gov-icon-bg {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #224abe, #2d6ade);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(34, 74, 190, 0.25);
+}
+
+.gov-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary, #2d3447);
+}
+
+.gov-en {
+  font-size: 0.8rem;
+  color: var(--text-muted, #a0aec0);
+  font-weight: 500;
+}
+
+/* Governorate Candidate List */
+.gov-candidates-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gov-candidate-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md, 12px);
+  background: #fafbfd;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+.gov-candidate-row:hover {
+  background: #f0f4ff;
+  border-color: #e8edf6;
+}
+
+.gov-rank {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: var(--text-secondary, #6b7b99);
+  background: #eef1f8;
+  flex-shrink: 0;
+}
+
+.gov-candidate-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 120px;
+}
+
+.gov-candidate-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary, #2d3447);
+}
+
+.gov-candidate-party {
+  font-size: 0.78rem;
+  color: var(--text-secondary, #6b7b99);
+  font-weight: 500;
+}
+
+.gov-candidate-result {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 100px;
+}
+
+.gov-result-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.82rem;
+}
+
+.gov-vote-count {
+  font-weight: 600;
+  color: var(--text-primary, #2d3447);
+}
+
+.gov-pct-badge {
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.empty-state-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.empty-state-card p {
+  margin-top: 16px;
+  font-size: 0.95rem;
+  color: var(--text-secondary, #6b7b99);
+}
+
+/* ============================================================
+   COMING SOON (CONSTITUENCY TAB)
+   ============================================================ */
+.coming-soon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.coming-soon-icon-wrapper {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #eef2ff, #dde5ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  animation: float 4s ease-in-out infinite;
+}
+
+.coming-soon-title {
+  margin: 0 0 10px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary, #2d3447);
+}
+
+.coming-soon-text {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-secondary, #6b7b99);
+  max-width: 320px;
+}
+
+.coming-soon-dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.coming-soon-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--primary, #224abe);
+  animation: pulse-dots 1.4s ease-in-out infinite;
+}
+
+.coming-soon-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.coming-soon-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes pulse-dots {
+
+  0%,
+  80%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   PARTICIPATION TAB
+   ============================================================ */
+.participation-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+/* Gauge Card */
+.gauge-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.gauge-title {
+  margin: 0 0 20px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary, #2d3447);
+}
+
+.gauge-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.gauge-svg {
+  width: 220px;
+  height: 220px;
+  transform: rotate(-90deg);
+}
+
+.gauge-bg {
+  fill: transparent;
+  stroke: #eef2ff;
+  stroke-width: 4;
+}
+
+.gauge-fill {
+  fill: transparent;
+  stroke: url(#gaugeGradient);
+  stroke: #224abe;
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition: stroke-dasharray 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gauge-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.gauge-value {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--primary, #224abe);
+  line-height: 1;
+}
+
+.gauge-label {
+  font-size: 0.78rem;
+  color: var(--text-secondary, #6b7b99);
+  font-weight: 500;
+}
+
+/* Mini Stat Cards */
+.participation-mini-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.mini-stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 20px;
+  flex: 1;
+}
+
+.mini-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.registered-icon {
+  background: linear-gradient(135deg, #224abe, #2d6ade);
+  box-shadow: 0 4px 12px rgba(34, 74, 190, 0.3);
+}
+
+.voted-icon {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.mini-stat-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-primary, #2d3447);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.mini-stat-label {
+  font-size: 0.82rem;
+  color: var(--text-secondary, #6b7b99);
+  font-weight: 500;
+}
+
+/* Participation Table */
+.participation-table-card {
+  animation: fadeInUp 0.5s ease-out both;
+  animation-delay: 0.2s;
+}
+
+.participation-table-wrapper {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #dde5ff transparent;
+}
+
+.participation-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.participation-table thead tr {
+  background: linear-gradient(135deg, #f8faff, #eef2ff);
+}
+
+.participation-table th {
+  padding: 14px 18px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text-primary, #2d3447);
+  border-bottom: 2px solid #e0e7f6;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.participation-table th:first-child {
+  border-radius: 0 12px 0 0;
+}
+
+.participation-table th:last-child {
+  border-radius: 12px 0 0 0;
+}
+
+.participation-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #f0f2f8;
+  font-size: 0.88rem;
+  color: var(--text-primary, #2d3447);
+  text-align: right;
+  vertical-align: middle;
+}
+
+.participation-table tbody tr {
+  transition: all 0.25s ease;
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+.participation-table tbody tr:hover {
+  background: #f8faff;
+}
+
+.participation-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.num-cell {
+  font-weight: 700;
+  font-size: 0.95rem !important;
+}
+
+.gov-name-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gov-name-ar-cell {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-primary, #2d3447);
+}
+
+.gov-name-en-cell {
+  font-size: 0.75rem;
+  color: var(--text-muted, #a0aec0);
+  font-weight: 500;
+}
+
+/* Participation Percentage Cell */
+.pct-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mini-bar-track {
+  width: 100px;
+  height: 7px;
+  background: #eef1f8;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.mini-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 2px;
+}
+
+.high-pct {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.mid-pct {
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+}
+
+.low-pct {
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
+.pct-text {
+  font-weight: 700;
+  font-size: 0.88rem;
+  min-width: 50px;
+}
+
+.pct-high {
+  color: #059669;
+}
+
+.pct-mid {
+  color: #d97706;
+}
+
+.pct-low {
+  color: #dc2626;
+}
+
+/* ============================================================
+   DEMOGRAPHICS TAB
+   ============================================================ */
+.demo-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-primary, #2d3447);
+  margin: 0 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #eef2ff;
+}
+
+.demo-overview-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.demo-chart-card {
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+.demo-summary-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Gender Bars */
+.gender-bars-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.gender-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gender-bar-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary, #6b7b99);
+  min-width: 100px;
+  text-align: right;
+}
+
+/* Age Distribution */
+.age-overview-card {
+  margin-bottom: 28px;
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+.age-bars-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 10px 0;
+}
+
+.age-bar-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+.age-bar-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary, #2d3447);
+  min-width: 55px;
+  text-align: center;
+  background: #f0f4ff;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.age-bar-track {
+  flex: 1;
+  height: 28px;
+  background: #eef1f8;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.age-bar-fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 4px;
+}
+
+.age-bar-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 80px;
+}
+
+.age-bar-count {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary, #2d3447);
+}
+
+.age-bar-pct {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary, #6b7b99);
+}
+
+/* Age Cell Data in Table */
+.age-cell-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 0;
+}
+
+.age-cell-count {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--text-primary, #2d3447);
+  line-height: 1;
+}
+
+.age-cell-pct {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--primary, #224abe);
+  background: #eef2ff;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+/* Gender Count Badges in Participation Table */
+.gender-count-badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.male-badge {
+  background: #224abe15;
+  color: #224abe;
+}
+
+.female-badge {
+  background: #ec489915;
+  color: #ec4899;
+}
+
+/* Demographics table overrides */
+.tab-panel .participation-table-card .participation-table th {
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 16px 14px;
+  background: linear-gradient(135deg, #f0f4ff, #e8edff);
+  font-weight: 800;
+}
+
+.tab-panel .participation-table-card .participation-table td.num-cell {
+  text-align: center;
+  padding: 12px 8px;
+}
+
+.tab-panel .participation-table-card .participation-table td:first-child {
+  min-width: 160px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 992px) {
+  .stats-header {
+    padding: 28px 0 34px;
+  }
+
+  .election-title {
+    font-size: 1.25rem;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .participation-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .participation-mini-stats {
+    flex-direction: row;
+  }
+
+  .candidate-row {
+    flex-wrap: wrap;
+  }
+
+  .candidate-result {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-header {
+    margin-top: 60px;
+    padding: 24px 0 30px;
+  }
+
+  .header-content {
+    gap: 14px;
+  }
+
+  .header-icon-wrapper {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+  }
+
+  .header-icon-wrapper svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .election-title {
+    font-size: 1.15rem;
+  }
+
+  .tabs-nav {
+    gap: 8px;
+  }
+
+  .tab-btn {
+    padding: 10px 16px;
+    font-size: 0.82rem;
+  }
+
+  .tab-btn span {
+    display: none;
+  }
+
+  .glass-card {
+    padding: 18px;
+  }
+
+  .donut-svg {
+    width: 170px;
+    height: 170px;
+  }
+
+  .donut-center-value {
+    font-size: 1.5rem;
+  }
+
+  .gauge-svg {
+    width: 160px;
+    height: 160px;
+  }
+
+  .gauge-value {
+    font-size: 1.8rem;
+  }
+
+  .participation-mini-stats {
+    flex-direction: column;
+  }
+
+  .mini-bar-track {
+    width: 70px;
+  }
+
+  .candidate-row {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .candidate-avatar-wrapper {
+    width: 38px;
+    height: 38px;
+  }
+
+  .candidate-rank {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+  }
+
+  .gov-candidate-row {
+    flex-wrap: wrap;
+  }
+
+  .gov-candidate-result {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-header {
+    margin-top: 56px;
+  }
+
+  .summary-card {
+    padding: 16px;
+  }
+
+  .summary-card-value {
+    font-size: 1.3rem;
+  }
+
+  .summary-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+
+  .pct-cell {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .mini-bar-track {
+    width: 100%;
+  }
+}

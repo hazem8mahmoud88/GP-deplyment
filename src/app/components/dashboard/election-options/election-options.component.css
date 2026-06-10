@@ -1,0 +1,188 @@
+.container {
+  min-height: calc(100vh - 316px);
+  margin-top: 30px;
+}
+
+/* ============================
+   Sidebar
+   ============================ */
+.sidebar {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  padding: 8px;
+  border-radius: 0 14px 14px 0;
+  margin-left: 15px;
+  border-left: 2px solid #224abe;
+  background: #fff;
+  width: 25%;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+ul li {
+  cursor: pointer;
+  padding: 12px 14px;
+  border: none;
+  border-bottom: 1px solid #f0f2f5;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+ul li svg {
+  flex-shrink: 0;
+  opacity: 0.6;
+  transition: all 0.2s;
+}
+
+ul li:hover {
+  background: #eef2ff;
+  color: #224abe;
+}
+
+ul li:hover svg {
+  opacity: 1;
+  stroke: #224abe;
+}
+
+ul li.active {
+  background: linear-gradient(135deg, #224abe, #2d6ade);
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(34, 74, 190, 0.25);
+}
+
+ul li.active svg {
+  opacity: 1;
+  stroke: #fff;
+}
+
+/* ============================
+   Shared Button Base
+   ============================ */
+.activate-election-btn,
+.close-election-btn,
+.count-votes-btn,
+.delete-election-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px 14px;
+  margin-top: 4px;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================
+   Activate Button (Green)
+   ============================ */
+.activate-election-btn {
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+  color: #15803d;
+  border-color: #bbf7d0;
+  margin-top: auto;
+}
+
+.activate-election-btn:hover {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: #fff;
+  border-color: #16a34a;
+  box-shadow: 0 4px 16px rgba(22, 163, 74, 0.3);
+  transform: translateY(-1px);
+}
+
+.activate-election-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.2);
+}
+
+/* ============================
+   Close Button (Amber)
+   ============================ */
+.close-election-btn {
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  color: #b45309;
+  border-color: #fde68a;
+}
+
+.close-election-btn:hover {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  color: #fff;
+  border-color: #d97706;
+  box-shadow: 0 4px 16px rgba(217, 119, 6, 0.3);
+  transform: translateY(-1px);
+}
+
+.close-election-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.2);
+}
+
+/* Delete Button (Red) */
+.delete-election-btn {
+  background: linear-gradient(135deg, #fef2f2, #fce7e7);
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+
+.delete-election-btn:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  color: #fff;
+  border-color: #dc2626;
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.3);
+  transform: translateY(-1px);
+}
+
+.delete-election-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+}
+
+/* ============================
+   Responsive
+   ============================ */
+@media (max-width: 992px) {
+
+  ul li span,
+  .activate-election-btn span,
+  .close-election-btn span,
+  .count-votes-btn span,
+  .delete-election-btn span {
+    display: none;
+  }
+
+  ul li {
+    text-align: center;
+    justify-content: center;
+    padding: 12px 10px;
+  }
+
+  .sidebar {
+    width: auto !important;
+  }
+
+  .activate-election-btn,
+  .close-election-btn,
+  .count-votes-btn,
+  .delete-election-btn {
+    justify-content: center;
+    padding: 10px;
+  }
+}

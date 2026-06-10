@@ -1,0 +1,779 @@
+<div class="stats-page">
+
+    <div class="stats-header">
+        <div class="header-bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-icon-wrapper">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="20" x2="18" y2="10" />
+                        <line x1="12" y1="20" x2="12" y2="4" />
+                        <line x1="6" y1="20" x2="6" y2="14" />
+                    </svg>
+                </div>
+                <div class="header-info" *ngIf="overallData">
+                    <h1 class="election-title">{{ overallData.electionTitle }}</h1>
+                    <div class="header-badges">
+                        <span class="h-badge type-badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round">
+                                <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" />
+                                <line x1="7" y1="7" x2="7.01" y2="7" />
+                            </svg>
+                            {{ overallData.electionType }}
+                        </span>
+                        <span class="h-badge status-badge" [ngClass]="{
+                'status-closed': overallData.status === 'Closed',
+                'status-active': overallData.status === 'Active',
+                'status-draft': overallData.status === 'Draft'
+              }">
+                            <span class="status-dot"></span>
+                            {{ overallData.status === 'Closed' ? 'مغلقة' : overallData.status === 'Active' ? 'نشطة' :
+                            overallData.status === 'Draft' ? 'مسودة' : overallData.status }}
+                        </span>
+                    </div>
+                </div>
+                <div class="header-info" *ngIf="!overallData">
+                    <h1 class="election-title">نتائج الانتخابات</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
+       MAIN CONTENT AREA
+       ═══════════════════════════════════════════════════ -->
+    <div class="container stats-body">
+
+        <!-- ─── Tab Navigation ─── -->
+        <div class="tabs-wrapper">
+            <div class="tabs-nav">
+                <button class="tab-btn" [class.active]="activeTab === 'overall'" (click)="activeTab = 'overall'">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <line x1="18" y1="20" x2="18" y2="10" />
+                        <line x1="12" y1="20" x2="12" y2="4" />
+                        <line x1="6" y1="20" x2="6" y2="14" />
+                    </svg>
+                    <span>النتائج العامة</span>
+                </button>
+                <button class="tab-btn" [class.active]="activeTab === 'governorate'"
+                    (click)="activeTab = 'governorate'">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                        <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    <span>حسب المحافظة</span>
+                </button>
+                <button class="tab-btn" [class.active]="activeTab === 'constituency'"
+                    (click)="activeTab = 'constituency'">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <line x1="3" y1="9" x2="21" y2="9" />
+                        <line x1="9" y1="21" x2="9" y2="9" />
+                    </svg>
+                    <span>حسب الدائرة</span>
+                </button>
+                <button class="tab-btn" [class.active]="activeTab === 'participation'"
+                    (click)="activeTab = 'participation'">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                        <path d="M16 3.13a4 4 0 010 7.75" />
+                    </svg>
+                    <span>نسبة المشاركة</span>
+                </button>
+                <button class="tab-btn" [class.active]="activeTab === 'demographics'"
+                    (click)="activeTab = 'demographics'">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4-4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <line x1="19" y1="8" x2="19" y2="14" />
+                        <line x1="22" y1="11" x2="16" y2="11" />
+                    </svg>
+                    <span>التحليل الديموغرافي</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════
+         TAB 1: OVERALL RESULTS
+         ═══════════════════════════════════════════════════ -->
+        <div class="tab-panel fade-in" *ngIf="activeTab === 'overall' && overallData">
+
+            <!-- Summary Stat Cards -->
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="summary-card-icon votes-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                            stroke-linecap="round">
+                            <path d="M9 11l3 3L22 4" />
+                            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+                        </svg>
+                    </div>
+                    <div class="summary-card-data">
+                        <div class="summary-card-value">{{ overallData.totalVotes }}</div>
+                        <div class="summary-card-label">إجمالي الأصوات</div>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-card-icon candidates-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                            stroke-linecap="round">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                            <path d="M16 3.13a4 4 0 010 7.75" />
+                        </svg>
+                    </div>
+                    <div class="summary-card-data">
+                        <div class="summary-card-value">{{ overallData.candidateResults?.length }}</div>
+                        <div class="summary-card-label">عدد المرشحين</div>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-card-icon type-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                            stroke-linecap="round">
+                            <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" />
+                            <line x1="7" y1="7" x2="7.01" y2="7" />
+                        </svg>
+                    </div>
+                    <div class="summary-card-data">
+                        <div class="summary-card-value text-val">{{ overallData.electionType }}</div>
+                        <div class="summary-card-label">نوع الانتخابات</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="row g-4 mt-1">
+                <!-- Donut Chart Card -->
+                <div class="col-lg-5">
+                    <div class="glass-card chart-card">
+                        <div class="card-title-bar">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#224abe"
+                                stroke-width="2" stroke-linecap="round">
+                                <path d="M21.21 15.89A10 10 0 118 2.83" />
+                                <path d="M22 12A10 10 0 0012 2v10z" />
+                            </svg>
+                            <h3>توزيع الأصوات</h3>
+                        </div>
+                        <div class="donut-wrapper">
+                            <svg class="donut-svg" viewBox="0 0 42 42">
+                                <circle class="donut-bg" cx="21" cy="21" r="15.91549" />
+                                <circle *ngFor="let candidate of overallData.candidateResults; let i = index"
+                                    class="donut-segment" cx="21" cy="21" r="15.91549"
+                                    [attr.stroke]="candidateColors[i % candidateColors.length]"
+                                    [attr.stroke-dasharray]="candidate.percentage + ' ' + (100 - candidate.percentage)"
+                                    [attr.stroke-dashoffset]="getCumulativeOffset(i)" />
+                            </svg>
+                            <div class="donut-center-label">
+                                <span class="donut-center-value">{{ overallData.totalVotes }}</span>
+                                <span class="donut-center-text">صوت</span>
+                            </div>
+                        </div>
+                        <div class="chart-legend">
+                            <div *ngFor="let candidate of overallData.candidateResults; let i = index"
+                                class="legend-item">
+                                <span class="legend-dot"
+                                    [style.background]="candidateColors[i % candidateColors.length]"></span>
+                                <span class="legend-name">{{ candidate.candidateName }}</span>
+                                <span class="legend-pct">{{ candidate.percentage }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Candidate Rankings Card -->
+                <div class="col-lg-7">
+                    <div class="glass-card rankings-card">
+                        <div class="card-title-bar">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#224abe"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 9H4.5a2.5 2.5 0 010-5C7 4 6 9 6 9z" />
+                                <path d="M18 9h1.5a2.5 2.5 0 000-5C17 4 18 9 18 9z" />
+                                <path d="M4 22h16" />
+                                <path d="M10 22V8h4v14" />
+                                <path d="M8 9h8l-1 5H9L8 9z" />
+                            </svg>
+                            <h3>ترتيب المرشحين</h3>
+                        </div>
+                        <div class="candidates-list">
+                            <div *ngFor="let candidate of overallData.candidateResults; let i = index"
+                                class="candidate-row" [class.winner-row]="i === 0"
+                                [style.animation-delay]="(i * 100) + 'ms'">
+                                <!-- Rank Badge -->
+                                <div class="candidate-rank" [class.rank-gold]="i === 0" [class.rank-silver]="i === 1"
+                                    [class.rank-bronze]="i === 2">
+                                    <span *ngIf="i === 0" class="crown-icon">👑</span>
+                                    {{ i + 1 }}
+                                </div>
+                                <!-- Avatar -->
+                                <div class="candidate-avatar-wrapper"
+                                    [style.background]="candidateColors[i % candidateColors.length] + '18'">
+                                    <img [src]="imageBaseUrl + candidate.photoUrl" [alt]="candidate.candidateName"
+                                        class="candidate-avatar" />
+                                    <span class="avatar-fallback"
+                                        [style.color]="candidateColors[i % candidateColors.length]">{{
+                                        candidate.candidateName?.charAt(0) }}</span>
+                                </div>
+                                <!-- Info -->
+                                <div class="candidate-info">
+                                    <div class="candidate-name">{{ candidate.candidateName }}</div>
+                                    <div class="candidate-party">{{ candidate.party }}</div>
+                                </div>
+                                <!-- Result Bar -->
+                                <div class="candidate-result">
+                                    <div class="result-numbers">
+                                        <span class="vote-count-num">{{ candidate.voteCount }}</span>
+                                        <span class="vote-label">صوت</span>
+                                        <span class="pct-badge"
+                                            [style.background]="candidateColors[i % candidateColors.length] + '15'"
+                                            [style.color]="candidateColors[i % candidateColors.length]">
+                                            {{ candidate.percentage }}%
+                                        </span>
+                                    </div>
+                                    <div class="bar-track">
+                                        <div class="bar-fill" [style.width.%]="candidate.percentage"
+                                            [style.background]="'linear-gradient(90deg, ' + candidateColors[i % candidateColors.length] + ', ' + candidateColors[i % candidateColors.length] + '99)'">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════
+         TAB 2: RESULTS BY GOVERNORATE
+         ═══════════════════════════════════════════════════ -->
+        <div class="tab-panel fade-in" *ngIf="activeTab === 'governorate'">
+
+            <!-- Governorate Pills -->
+            <div class="gov-pills-wrapper" *ngIf="governorateResults.length > 0">
+                <div class="gov-pills">
+                    <button *ngFor="let gov of governorateResults; let i = index" class="gov-pill"
+                        [class.active]="selectedGovIndex === i" (click)="selectedGovIndex = i">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>
+                        {{ gov.governorateNameAr }}
+                    </button>
+                </div>
+            </div>
+
+            <!-- Selected Governorate Results -->
+            <div class="glass-card gov-results-card" *ngIf="governorateResults.length > 0">
+                <div class="gov-header">
+                    <div class="gov-title-area">
+                        <div class="gov-icon-bg">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                                stroke-linecap="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3>{{ governorateResults[selectedGovIndex]?.governorateNameAr }}</h3>
+                            <span class="gov-en">{{ governorateResults[selectedGovIndex]?.governorateNameEn }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gov-candidates-list">
+                    <div *ngFor="let candidate of governorateResults[selectedGovIndex]?.candidates; let i = index"
+                        class="gov-candidate-row" [style.animation-delay]="(i * 80) + 'ms'">
+                        <!-- Rank -->
+                        <div class="gov-rank" [class.rank-gold]="i === 0" [class.rank-silver]="i === 1"
+                            [class.rank-bronze]="i === 2">
+                            {{ i + 1 }}
+                        </div>
+                        <!-- Info -->
+                        <div class="gov-candidate-info">
+                            <div class="gov-candidate-name">{{ candidate.candidateName }}</div>
+                            <div class="gov-candidate-party">{{ candidate.party }}</div>
+                        </div>
+                        <!-- Result -->
+                        <div class="gov-candidate-result">
+                            <div class="gov-result-meta">
+                                <span class="gov-vote-count">{{ candidate.voteCount }} صوت</span>
+                                <span class="gov-pct-badge"
+                                    [style.background]="candidateColors[i % candidateColors.length] + '15'"
+                                    [style.color]="candidateColors[i % candidateColors.length]">
+                                    {{ candidate.percentage }}%
+                                </span>
+                            </div>
+                            <div class="bar-track">
+                                <div class="bar-fill" [style.width.%]="candidate.percentage"
+                                    [style.background]="'linear-gradient(90deg, ' + candidateColors[i % candidateColors.length] + ', ' + candidateColors[i % candidateColors.length] + '99)'">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state-card glass-card" *ngIf="governorateResults.length === 0">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#a0aec0" stroke-width="1.5"
+                    stroke-linecap="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                </svg>
+                <p>لا توجد نتائج حسب المحافظة</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════
+         TAB 3: RESULTS BY CONSTITUENCY
+         ═══════════════════════════════════════════════════ -->
+        <div class="tab-panel fade-in" *ngIf="activeTab === 'constituency'">
+            <!-- Governorate Pills -->
+            <div class="gov-pills-wrapper" *ngIf="governorateResults && governorateResults.length > 0">
+                <div class="gov-pills">
+                    <button *ngFor="let gov of governorateResults; let i = index" class="gov-pill"
+                        [class.active]="selectedConstGovIndex === i" (click)="loadConstituencyData(i)">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>
+                        {{ gov.governorateNameAr }}
+                    </button>
+                </div>
+            </div>
+
+            <!-- Empty State for selection -->
+            <div class="empty-state-card glass-card" *ngIf="!constituencyData">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#224abe" stroke-width="1.5"
+                    stroke-linecap="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                <p>الرجاء اختيار محافظة لعرض نتائج الدوائر الانتخابية</p>
+            </div>
+
+            <!-- Selected Governorate Constituencies Results -->
+            <div *ngIf="constituencyData">
+                <!-- Iterate over constituencies in the selected governorate -->
+                <div class="glass-card gov-results-card mb-4" style="margin-bottom: 24px;" *ngFor="let consti of constituencyData.constituencies">
+                    <div class="gov-header">
+                        <div class="gov-title-area">
+                            <div class="gov-icon-bg">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                                    stroke-linecap="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                                    <line x1="3" y1="9" x2="21" y2="9" />
+                                    <line x1="9" y1="21" x2="9" y2="9" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>{{ consti.constituencyNameAr }}</h3>
+                                <span class="gov-en">{{ consti.constituencyNameEn }}</span>
+                            </div>
+                        </div>
+                        <div class="total-votes-badge" style="background: var(--primary-bg); color: var(--primary); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 700;">
+                            إجمالي الأصوات: {{ consti.totalVotes }}
+                        </div>
+                    </div>
+
+                    <div class="gov-candidates-list">
+                        <div *ngFor="let candidate of consti.candidates; let i = index" class="gov-candidate-row" [style.animation-delay]="(i * 80) + 'ms'">
+                            <!-- Rank -->
+                            <div class="gov-rank" [class.rank-gold]="i === 0" [class.rank-silver]="i === 1"
+                                [class.rank-bronze]="i === 2">
+                                {{ i + 1 }}
+                            </div>
+                            <!-- Info -->
+                            <div class="gov-candidate-info">
+                                <div class="gov-candidate-name">{{ candidate.candidateName }}</div>
+                                <div class="gov-candidate-party">{{ candidate.party }}</div>
+                            </div>
+                            <!-- Result -->
+                            <div class="gov-candidate-result">
+                                <div class="gov-result-meta">
+                                    <span class="gov-vote-count">{{ candidate.voteCount }} صوت</span>
+                                    <span class="gov-pct-badge"
+                                        [style.background]="candidateColors[i % candidateColors.length] + '15'"
+                                        [style.color]="candidateColors[i % candidateColors.length]">
+                                        {{ candidate.percentage }}%
+                                    </span>
+                                </div>
+                                <div class="bar-track">
+                                    <div class="bar-fill" [style.width.%]="candidate.percentage"
+                                        [style.background]="'linear-gradient(90deg, ' + candidateColors[i % candidateColors.length] + ', ' + candidateColors[i % candidateColors.length] + '99)'">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty State if no constituencies -->
+                <div class="empty-state-card glass-card" *ngIf="constituencyData.constituencies.length === 0">
+                    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#a0aec0" stroke-width="1.5"
+                        stroke-linecap="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <line x1="3" y1="9" x2="21" y2="9" />
+                        <line x1="9" y1="21" x2="9" y2="9" />
+                    </svg>
+                    <p>لا توجد دوائر انتخابية في هذه المحافظة</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════
+         TAB 4: PARTICIPATION RATE
+         ═══════════════════════════════════════════════════ -->
+        <div class="tab-panel fade-in" *ngIf="activeTab === 'participation' && participationData">
+
+            <!-- Participation Overview -->
+            <div class="participation-overview">
+                <!-- Gauge Card -->
+                <div class="glass-card gauge-card">
+                    <h3 class="gauge-title">نسبة المشاركة الإجمالية</h3>
+                    <div class="gauge-wrapper">
+                        <svg class="gauge-svg" viewBox="0 0 42 42">
+                            <circle class="gauge-bg" cx="21" cy="21" r="15.91549" />
+                            <circle class="gauge-fill" cx="21" cy="21" r="15.91549"
+                                [attr.stroke-dasharray]="participationData.overallPercentage + ' ' + (100 - participationData.overallPercentage)"
+                                stroke-dashoffset="25" />
+                        </svg>
+                        <div class="gauge-center">
+                            <span class="gauge-value">{{ participationData.overallPercentage }}%</span>
+                            <span class="gauge-label">نسبة المشاركة</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mini Stats -->
+                <div class="participation-mini-stats">
+                    <div class="glass-card mini-stat-card">
+                        <div class="mini-stat-icon registered-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                                stroke-linecap="round">
+                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                                <path d="M16 3.13a4 4 0 010 7.75" />
+                            </svg>
+                        </div>
+                        <div class="mini-stat-value">{{ participationData.totalRegistered }}</div>
+                        <div class="mini-stat-label">إجمالي المسجلين</div>
+                    </div>
+                    <div class="glass-card mini-stat-card">
+                        <div class="mini-stat-icon voted-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                                stroke-linecap="round">
+                                <path d="M9 11l3 3L22 4" />
+                                <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+                            </svg>
+                        </div>
+                        <div class="mini-stat-value">{{ participationData.totalVoted }}</div>
+                        <div class="mini-stat-label">إجمالي المصوتين</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Governorate Participation Table -->
+            <div class="glass-card participation-table-card">
+                <div class="card-title-bar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#224abe" stroke-width="2"
+                        stroke-linecap="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                        <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    <h3>المشاركة حسب المحافظة</h3>
+                </div>
+                <div class="participation-table-wrapper">
+                    <table class="participation-table">
+                        <thead>
+                            <tr>
+                                <th>المحافظة</th>
+                                <th>المسجلين</th>
+                                <th>المصوتين</th>
+                                <th>ذكور ♂</th>
+                                <th>إناث ♀</th>
+                                <th>نسبة المشاركة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let gov of participationData.byGovernorate; let i = index"
+                                [style.animation-delay]="(i * 60) + 'ms'">
+                                <td>
+                                    <div class="gov-name-cell">
+                                        <span class="gov-name-ar-cell">{{ gov.governorateNameAr }}</span>
+                                        <span class="gov-name-en-cell">{{ gov.governorateNameEn }}</span>
+                                    </div>
+                                </td>
+                                <td class="num-cell">{{ gov.registered }}</td>
+                                <td class="num-cell">{{ gov.voted }}</td>
+                                <td class="num-cell">
+                                    <span class="gender-count-badge male-badge">{{ gov.maleVoted }}</span>
+                                </td>
+                                <td class="num-cell">
+                                    <span class="gender-count-badge female-badge">{{ gov.femaleVoted }}</span>
+                                </td>
+                                <td>
+                                    <div class="pct-cell">
+                                        <div class="mini-bar-track">
+                                            <div class="mini-bar-fill" [style.width.%]="gov.percentage" [ngClass]="{
+                          'high-pct': gov.percentage >= 60,
+                          'mid-pct': gov.percentage >= 30 && gov.percentage < 60,
+                          'low-pct': gov.percentage < 30
+                        }">
+                                            </div>
+                                        </div>
+                                        <span class="pct-text" [ngClass]="{
+                        'pct-high': gov.percentage >= 60,
+                        'pct-mid': gov.percentage >= 30 && gov.percentage < 60,
+                        'pct-low': gov.percentage < 30
+                      }">
+                                            {{ gov.percentage }}%
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════
+         TAB 5: DEMOGRAPHIC ANALYSIS
+         ═══════════════════════════════════════════════════ -->
+        <div class="tab-panel fade-in" *ngIf="activeTab === 'demographics'">
+
+            <!-- Empty state -->
+            <div class="empty-state-card glass-card" *ngIf="!demographicData">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#a0aec0" stroke-width="1.5"
+                    stroke-linecap="round">
+                    <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4-4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <line x1="19" y1="8" x2="19" y2="14" />
+                    <line x1="22" y1="11" x2="16" y2="11" />
+                </svg>
+                <p>لا توجد بيانات ديموغرافية — يتم حسابها أثناء الفرز</p>
+            </div>
+
+            <div *ngIf="demographicData">
+
+                <!-- ═══ GENDER SECTION ═══ -->
+                <h2 class="demo-section-title">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#224abe" stroke-width="2"
+                        stroke-linecap="round">
+                        <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4-4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <line x1="19" y1="8" x2="19" y2="14" />
+                        <line x1="22" y1="11" x2="16" y2="11" />
+                    </svg>
+                    التوزيع حسب الجنس
+                </h2>
+
+                <div class="demo-overview-row">
+                    <!-- Gender Donut -->
+                    <div class="glass-card chart-card demo-chart-card">
+                        <div class="card-title-bar">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#224abe"
+                                stroke-width="2" stroke-linecap="round">
+                                <path d="M21.21 15.89A10 10 0 118 2.83" />
+                                <path d="M22 12A10 10 0 0012 2v10z" />
+                            </svg>
+                            <h3>نسبة الذكور والإناث</h3>
+                        </div>
+                        <div class="donut-wrapper">
+                            <svg class="donut-svg" viewBox="0 0 42 42">
+                                <circle class="donut-bg" cx="21" cy="21" r="15.91549" />
+                                <circle class="donut-segment" cx="21" cy="21" r="15.91549"
+                                    stroke="#224abe"
+                                    [attr.stroke-dasharray]="demographicData.genderStats.malePercentage + ' ' + (100 - demographicData.genderStats.malePercentage)"
+                                    stroke-dashoffset="25" />
+                                <circle class="donut-segment" cx="21" cy="21" r="15.91549"
+                                    stroke="#ec4899"
+                                    [attr.stroke-dasharray]="demographicData.genderStats.femalePercentage + ' ' + (100 - demographicData.genderStats.femalePercentage)"
+                                    [attr.stroke-dashoffset]="25 - demographicData.genderStats.malePercentage" />
+                            </svg>
+                            <div class="donut-center-label">
+                                <span class="donut-center-value">{{ demographicData.totalVotes }}</span>
+                                <span class="donut-center-text">صوت</span>
+                            </div>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <span class="legend-dot" style="background: #224abe"></span>
+                                <span class="legend-name">ذكور</span>
+                                <span class="legend-pct">{{ demographicData.genderStats.malePercentage }}%</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot" style="background: #ec4899"></span>
+                                <span class="legend-name">إناث</span>
+                                <span class="legend-pct">{{ demographicData.genderStats.femalePercentage }}%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gender Summary Cards -->
+                    <div class="demo-summary-cards">
+                        <div class="glass-card mini-stat-card">
+                            <div class="mini-stat-icon" style="background: linear-gradient(135deg, #224abe, #1a3a9e)">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+                                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4-4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
+                            </div>
+                            <div class="mini-stat-value">{{ demographicData.genderStats.totalMaleVotes }}</div>
+                            <div class="mini-stat-label">أصوات الذكور</div>
+                        </div>
+                        <div class="glass-card mini-stat-card">
+                            <div class="mini-stat-icon" style="background: linear-gradient(135deg, #ec4899, #db2777)">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+                                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4-4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
+                            </div>
+                            <div class="mini-stat-value">{{ demographicData.genderStats.totalFemaleVotes }}</div>
+                            <div class="mini-stat-label">أصوات الإناث</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gender per Candidate -->
+                <div class="glass-card gov-results-card">
+                    <div class="card-title-bar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#224abe" stroke-width="2" stroke-linecap="round">
+                            <line x1="18" y1="20" x2="18" y2="10" />
+                            <line x1="12" y1="20" x2="12" y2="4" />
+                            <line x1="6" y1="20" x2="6" y2="14" />
+                        </svg>
+                        <h3>أصوات كل مرشح حسب الجنس</h3>
+                    </div>
+                    <div class="gov-candidates-list">
+                        <div *ngFor="let c of demographicData.genderStats.candidateBreakdowns; let i = index"
+                            class="gov-candidate-row" [style.animation-delay]="(i * 80) + 'ms'">
+                            <div class="gov-rank" [class.rank-gold]="i === 0" [class.rank-silver]="i === 1" [class.rank-bronze]="i === 2">
+                                {{ i + 1 }}
+                            </div>
+                            <div class="gov-candidate-info">
+                                <div class="gov-candidate-name">{{ c.candidateName }}</div>
+                                <div class="gov-candidate-party">{{ c.party }}</div>
+                            </div>
+                            <div class="gender-bars-wrapper">
+                                <div class="gender-bar-row">
+                                    <span class="gender-bar-label">♂ ذكر {{ c.maleVotes }}</span>
+                                    <div class="bar-track">
+                                        <div class="bar-fill" [style.width.%]="c.malePercentage" style="background: linear-gradient(90deg, #224abe, #224abe99)"></div>
+                                    </div>
+                                    <span class="gov-pct-badge" style="background: #224abe15; color: #224abe">{{ c.malePercentage }}%</span>
+                                </div>
+                                <div class="gender-bar-row">
+                                    <span class="gender-bar-label">♀ أنثى {{ c.femaleVotes }}</span>
+                                    <div class="bar-track">
+                                        <div class="bar-fill" [style.width.%]="c.femalePercentage" style="background: linear-gradient(90deg, #ec4899, #ec489999)"></div>
+                                    </div>
+                                    <span class="gov-pct-badge" style="background: #ec489915; color: #ec4899">{{ c.femalePercentage }}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══ AGE SECTION ═══ -->
+                <h2 class="demo-section-title" style="margin-top: 40px;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#224abe" stroke-width="2"
+                        stroke-linecap="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    التوزيع حسب الفئة العمرية
+                </h2>
+
+                <!-- Age Distribution Overview -->
+                <div class="glass-card age-overview-card">
+                    <div class="card-title-bar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#224abe" stroke-width="2" stroke-linecap="round">
+                            <line x1="18" y1="20" x2="18" y2="10" />
+                            <line x1="12" y1="20" x2="12" y2="4" />
+                            <line x1="6" y1="20" x2="6" y2="14" />
+                        </svg>
+                        <h3>توزيع الأصوات حسب العمر</h3>
+                    </div>
+                    <div class="age-bars-container">
+                        <div *ngFor="let ag of demographicData.ageStats.ageGroups; let i = index" class="age-bar-item"
+                            [style.animation-delay]="(i * 100) + 'ms'">
+                            <div class="age-bar-label">{{ ag.ageGroup }}</div>
+                            <div class="age-bar-track">
+                                <div class="age-bar-fill" [style.width.%]="ag.percentage"
+                                    [style.background]="candidateColors[i % candidateColors.length]">
+                                </div>
+                            </div>
+                            <div class="age-bar-stats">
+                                <span class="age-bar-count">{{ ag.voteCount }} صوت</span>
+                                <span class="age-bar-pct">{{ ag.percentage }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Age per Candidate Table -->
+                <div class="glass-card participation-table-card">
+                    <div class="card-title-bar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#224abe" stroke-width="2" stroke-linecap="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <line x1="3" y1="9" x2="21" y2="9" />
+                            <line x1="9" y1="21" x2="9" y2="9" />
+                        </svg>
+                        <h3>أصوات كل مرشح حسب الفئة العمرية</h3>
+                    </div>
+                    <div class="participation-table-wrapper">
+                        <table class="participation-table">
+                            <thead>
+                                <tr>
+                                    <th>المرشح</th>
+                                    <th *ngFor="let ag of demographicData.ageStats.ageGroups">{{ ag.ageGroup }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let c of demographicData.ageStats.candidateBreakdowns; let i = index"
+                                    [style.animation-delay]="(i * 60) + 'ms'">
+                                    <td>
+                                        <div class="gov-name-cell">
+                                            <span class="gov-name-ar-cell">{{ c.candidateName }}</span>
+                                            <span class="gov-name-en-cell">{{ c.party }}</span>
+                                        </div>
+                                    </td>
+                                    <td *ngFor="let ag of c.ageGroups" class="num-cell">
+                                        <div class="age-cell-data">
+                                            <span class="age-cell-count">{{ ag.voteCount }}</span>
+                                            <span class="age-cell-pct">{{ ag.percentage }}%</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap');
+
+/* ============================
+   CSS Custom Properties
+   ============================ */
+:root {
+  --primary: #224abe;
+  --primary-dark: #1a3a9e;
+  --primary-light: #2d6ade;
+  --primary-bg: #eef2ff;
+  --primary-bg-hover: #dde5ff;
+  --accent: #2d7aed;
+  --dark: #1a2a6c;
+  --text-primary: #2d3447;
+  --text-secondary: #6b7b99;
+  --text-muted: #a0aec0;
+  --border: #e8edf6;
+  --border-light: #eef1f8;
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --card-shadow-hover: 0 8px 32px rgba(34, 74, 190, 0.12);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --transition: 0.25s ease;
+}
+
+* {
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+
+html,
+body {
+  scroll-behavior: smooth;
+}
+
+body {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Noto Kufi Arabic', sans-serif;
+  background: #f5f7fb;
+  color: var(--text-primary);
+}
+
+/* ============================
+   Shared Keyframes
+   ============================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================
+   Shared Form Styles
+   ============================ */
+.verify-election-form input {
+  text-align: right;
+  padding-right: 2.5rem;
+  color: #000;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: none;
+  border-radius: 0.25rem;
+}
+
+.verify-election-form input::placeholder {
+  color: #e0e0e0;
+}
+
+.verify-election-form .bi-key {
+  pointer-events: none;
+  font-size: 1.2rem;
+}

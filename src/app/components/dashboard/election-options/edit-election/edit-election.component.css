@@ -1,0 +1,151 @@
+/* ============================
+   Edit Election Card
+   ============================ */
+.edit-card {
+  max-width: 900px;
+  margin-inline: auto;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.edit-header {
+  background: linear-gradient(135deg, #1a2a6c, #224abe);
+  color: #fff;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit-header h5 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.edit-body {
+  padding: 24px;
+}
+
+/* Form Fields */
+.form-field {
+  margin-bottom: 4px;
+}
+
+.form-field .form-label {
+  display: block;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 5px;
+}
+
+.custom-input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  color: #374151;
+  background: #fafbfc;
+  transition: all 0.25s ease;
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: #224abe;
+  box-shadow: 0 0 0 3px rgba(34, 74, 190, 0.1);
+  background: #fff;
+}
+
+.select-wrapper {
+  position: relative;
+}
+
+.custom-select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  color: #374151;
+  background: #fafbfc;
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.custom-select:focus {
+  outline: none;
+  border-color: #224abe;
+  box-shadow: 0 0 0 3px rgba(34, 74, 190, 0.1);
+}
+
+.select-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.custom-textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  color: #374151;
+  background: #fafbfc;
+  height: 100px;
+  margin-bottom: 16px;
+  transition: all 0.25s ease;
+  resize: vertical;
+}
+
+.custom-textarea:focus {
+  outline: none;
+  border-color: #224abe;
+  box-shadow: 0 0 0 3px rgba(34, 74, 190, 0.1);
+  background: #fff;
+}
+
+/* Submit Button */
+.submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 28px;
+  background: linear-gradient(135deg, #224abe, #2d6ade);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(34, 74, 190, 0.25);
+}
+
+.submit-btn:hover {
+  background: linear-gradient(135deg, #1b3e9e, #2460c4);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(34, 74, 190, 0.35);
+}

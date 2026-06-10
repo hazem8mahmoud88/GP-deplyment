@@ -1,0 +1,156 @@
+<div class="container">
+  <div class="main d-flex flex-column">
+    <div class="wizard-header">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#224abe" stroke-width="2"
+        stroke-linecap="round">
+        <path d="M9 11l3 3L22 4" />
+        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+      </svg>
+      <h1>{{p3Active ? 'اختيار المرشح' : 'تحقيق الهويه'}}</h1>
+    </div>
+    <div class="form-container">
+      <!-- Step Indicator -->
+      <div class="step-indicator mt-4">
+        <div class="step step-active">
+          <div class="step-circle">
+            <svg *ngIf="p2Active" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"
+              stroke-linecap="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span *ngIf="!p2Active">1</span>
+          </div>
+          <span class="step-label">الهوية</span>
+        </div>
+        <div class="step-line" [class.step-line-active]="p2Active"></div>
+        <div class="step" [class.step-active]="p2Active">
+          <div class="step-circle">
+            <svg *ngIf="p3Active" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"
+              stroke-linecap="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span *ngIf="!p3Active">2</span>
+          </div>
+          <span class="step-label">التحقق</span>
+        </div>
+        <div class="step-line" [class.step-line-active]="p3Active"></div>
+        <div class="step" [class.step-active]="p3Active">
+          <div class="step-circle"><span>3</span></div>
+          <span class="step-label">التصويت</span>
+        </div>
+      </div>
+
+      <!-- First Process -->
+      <app-message-box [showSuccess]="successMessage" [showError]="errorMessage"></app-message-box>
+      <ng-container *ngIf="idVerifySection" class="changing-form-container text-center">
+        <form [formGroup]="idForm" (ngSubmit)="onSubmit()"
+          class="text-center id-form d-flex flex-column justify-content-center">
+          <label>الرجاء ادخال الرقم القومي</label>
+          <input formControlName="id" type="text" maxlength="14" placeholder="_ _ _ _ _ _ _ _ _ _ _ _ _ _">
+          <div class="info-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"
+              stroke-linecap="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+            <span>سيتم استخدام الرقم للتحقق من هويتك فقط. لن يتم ربطه بصوتك.</span>
+          </div>
+          <button [disabled]="idForm.invalid" type="submit" class="action-btn">متابعه...</button>
+        </form>
+      </ng-container>
+
+      <!-- Second Process -->
+      <ng-container *ngIf="pictureVerificationSection">
+        <div class="second-process">
+          <div class="text text-center">
+            <h2>مرحبا 👋 {{voterName}}</h2>
+            <p *ngIf="voterLocation" class="location-text">📍 {{voterLocation}}</p>
+            <p>للتحقق من هويتك، يرجى التقاط صورة</p>
+          </div>
+          <div class="camera-capture-container">
+            <img *ngIf="capturedImage" [src]="capturedImage" class="captured-img">
+            <video *ngIf="!capturedImage && !cameraError" #video autoplay playsinline></video>
+            <div class="error-box" *ngIf="cameraError">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2"
+                stroke-linecap="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="15" y1="9" x2="9" y2="15" />
+                <line x1="9" y1="9" x2="15" y2="15" />
+              </svg>
+              لم يتم التعرف علي الكاميرا الخاصه بك
+            </div>
+            <div class="tips-box" *ngIf="!capturedImage">
+              <p class="tips-title">يرجي التأكد من:</p>
+              <ul>
+                <li>الكاميره تعمل</li>
+                <li>الإضاءة الجيدة</li>
+                <li>وجهك كامل داخل الدائرة</li>
+                <li>عدم ارتداء نظارة شمسية أو كمامة</li>
+              </ul>
+            </div>
+            <button *ngIf="!capturedImage" [disabled]="!stream" (click)="capture()" class="action-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round">
+                <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" />
+                <circle cx="12" cy="13" r="4" />
+              </svg>
+              التقط صوره
+            </button>
+            <button *ngIf="capturedImage" (click)="checkImgIdentity()" class="action-btn">
+              <ng-container *ngIf="isChecking">
+                <div class="loader"></div>
+              </ng-container>
+              <ng-container *ngIf="!isChecking">تحقق</ng-container>
+            </button>
+            <canvas #canvas hidden></canvas>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Third Process -->
+      <ng-container *ngIf="candidateSelectionSection">
+        <div class="third-process">
+          <div class="timer-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#92400e" stroke-width="2"
+              stroke-linecap="round">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            <span>الوقت المتبقي: {{countdown}}</span>
+          </div>
+          <form class="d-flex flex-column gap-3" [formGroup]="candidatesForm" (ngSubmit)="saveCandidateInfo()">
+
+            <label class="w-100" *ngFor="let candidate of candidates">
+              <input type="radio" formControlName="candidate" name="candidate" [value]="candidate">
+              <div class="candidate-container w-100 d-flex flex-row align-items-center">
+                <div class="candidate-logo d-flex align-items-center justify-content-center">
+                  <img class="img-fluid" [src]="candidate.photoPath" alt="صوره">
+                </div>
+                <div class="text d-flex align-items-center flex-column h-100">
+                  <p>{{candidate.fullName}}</p>
+                  <span>{{candidate.symbol}}</span>
+                </div>
+              </div>
+            </label>
+
+            <div class="info-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"
+                stroke-linecap="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+              <span>تصويتك آمن ولن يتم ربطه بأي من معلوماتك الشخصيه.</span>
+            </div>
+            <button type="submit" class="action-btn" (click)="castVote()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round">
+                <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+                <polyline points="17 21 17 13 7 13 7 21" />
+              </svg>
+              حفظ الأختيار
+            </button>
+          </form>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

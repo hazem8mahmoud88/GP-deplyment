@@ -1,0 +1,72 @@
+.notify-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    direction: rtl;
+}
+
+.notify-box {
+    padding: 14px 18px;
+    border-radius: 12px;
+    min-width: 280px;
+    max-width: 380px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 600;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.4s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.notify-icon {
+    flex-shrink: 0;
+}
+
+.notify-box.success {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+}
+
+.notify-box.error {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
+
+/* Progress bar for auto-dismiss */
+.progress-bar {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.4);
+    animation: shrink 2s linear forwards;
+    border-radius: 0 0 12px 0;
+}
+
+@keyframes shrink {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(40px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}

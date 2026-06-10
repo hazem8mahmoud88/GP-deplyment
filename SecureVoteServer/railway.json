@@ -4,6 +4,6 @@
         "buildCommand": "dotnet publish SecureVote.csproj -c Release -o out"
     },
     "deploy": {
-        "startCommand": "./out/SecureVote"
+        "startCommand": "./out/SecureVote --urls http://0.0.0.0:$PORT"
     }
 }

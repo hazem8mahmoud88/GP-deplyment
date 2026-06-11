@@ -166,7 +166,7 @@ public static class TestDataSeeder
             {
                 UniqueIdentifier = $"3{i:D013}",
                 FullName = name,
-                DateOfBirth = new DateTime(1960 + _random.Next(45), _random.Next(1, 13), _random.Next(1, 28)),
+                DateOfBirth = DateTime.SpecifyKind(new DateTime(1960 + _random.Next(45), _random.Next(1, 13), _random.Next(1, 28)), DateTimeKind.Utc),
                 Gender = isMale ? "Male" : "Female",
                 PhoneNumber = $"+20100{_random.Next(1000000, 9999999)}",
                 Email = $"pres{i}@test.com",
@@ -206,7 +206,7 @@ public static class TestDataSeeder
             {
                 UniqueIdentifier = $"9{i:D013}",
                 FullName = name,
-                DateOfBirth = new DateTime(1998 + _random.Next(7), _random.Next(1, 13), _random.Next(1, 28)),
+                DateOfBirth = DateTime.SpecifyKind(new DateTime(1998 + _random.Next(7), _random.Next(1, 13), _random.Next(1, 28)), DateTimeKind.Utc),
                 Gender = isMale ? "Male" : "Female",
                 PhoneNumber = $"+20101{_random.Next(1000000, 9999999)}",
                 Email = $"student{i}@student.test.com",
@@ -239,7 +239,7 @@ public static class TestDataSeeder
             {
                 UniqueIdentifier = $"7{i:D013}",
                 FullName = name,
-                DateOfBirth = new DateTime(1960 + _random.Next(45), _random.Next(1, 13), _random.Next(1, 28)),
+                DateOfBirth = DateTime.SpecifyKind(new DateTime(1960 + _random.Next(45), _random.Next(1, 13), _random.Next(1, 28)), DateTimeKind.Utc),
                 Gender = isMale ? "Male" : "Female",
                 PhoneNumber = $"+20102{_random.Next(1000000, 9999999)}",
                 Email = $"maadi{i}@maadi.test.com",

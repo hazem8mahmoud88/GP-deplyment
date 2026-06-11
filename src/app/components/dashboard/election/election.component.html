@@ -39,9 +39,10 @@
             <h5 class="mb-0 fw-bold">{{election.title}}</h5>
           </div>
           <span class="badge status-badge" [class.status-active]="election.status == 'Active'"
-            [class.status-draft]="election.status == 'Draft'"
-            [class.status-ended]="election.status == 'Closed' || election.status == 'Counted'">
-            {{election.status == 'Active' ? 'نشط' : election.status == 'Draft' ? 'لم تبدأ' : election.status == 'Counted' ? 'تم الفرز' : 'انتهت'}}
+            [class.status-draft]="election.status == 'Draft'" [class.status-closed]="election.status == 'Closed'"
+            [class.status-counted]="election.status == 'Counted'">
+            {{election.status == 'Active' ? 'نشط' : election.status == 'Draft' ? 'لم تبدأ' : election.status ==
+            'Counted' ? 'تم الفرز' : 'انتهت'}}
           </span>
         </div>
         <div class="card-body d-flex flex-column">
@@ -81,7 +82,17 @@
             </svg>
             {{home ? 'صوت الان' : 'تفاصيل'}}
           </button>
-          <button *ngIf="election.status == 'Closed' || election.status == 'Counted'" class="mt-auto vote-btn results-btn w-100"
+          <button *ngIf="election.status == 'Closed'" class="mt-auto vote-btn results-btn w-100"
+            (click)="home ? showStats(election.id) : organizerID ? goToOrganizerOptions(election.id) : addOrganizer(election.id)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round">
+              <path d="M18 20V10" />
+              <path d="M12 20V4" />
+              <path d="M6 20v-6" />
+            </svg>
+            {{home ? 'عرض النتائج' : 'تفاصيل'}}
+          </button>
+          <button *ngIf="election.status == 'Counted'" class="mt-auto vote-btn results-btn-counted w-100"
             (click)="home ? showStats(election.id) : organizerID ? goToOrganizerOptions(election.id) : addOrganizer(election.id)">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round">

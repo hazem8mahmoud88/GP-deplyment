@@ -238,8 +238,10 @@
                                 <!-- Result Bar -->
                                 <div class="candidate-result">
                                     <div class="result-numbers">
-                                        <span class="vote-count-num">{{ candidate.voteCount }}</span>
-                                        <span class="vote-label">صوت</span>
+                                        <div class="votes-group">
+                                            <span class="vote-count-num">{{ candidate.voteCount }}</span>
+                                            <span class="vote-label">صوت</span>
+                                        </div>
                                         <span class="pct-badge"
                                             [style.background]="candidateColors[i % candidateColors.length] + '15'"
                                             [style.color]="candidateColors[i % candidateColors.length]">

@@ -14,7 +14,7 @@ public class VotingService(
     ApplicationDbContext context,
     IFaceRecognitionService faceRecognitionService,
     IJwtProvider jwtProvider,
-    IWebHostEnvironment environment) : IVotingService
+    IHttpClientFactory httpClientFactory) : IVotingService
 {
     public async Task<Result<VerifyIdentityResponse>> VerifyIdentityAsync(VerifyIdentityRequest request)
     {
@@ -75,17 +75,24 @@ public class VotingService(
         if (electionVoter.HasVoted)
             return Result.Failure<VerifyFaceResponse>(VotingErrors.AlreadyVoted);
 
-        // 2. Check if photo exists
-        var photoPath = electionVoter.Voter.PhotoUrl;
-        if (string.IsNullOrEmpty(photoPath))
+        // 2. Check if photo URL exists
+        var photoUrl = electionVoter.Voter.PhotoUrl;
+        if (string.IsNullOrEmpty(photoUrl))
             return Result.Failure<VerifyFaceResponse>(VotingErrors.VoterPhotoNotFound);
 
-        // Build full path (photos are stored in /uploads/voters/...)
-        var fullPhotoPath = Path.Combine(environment.ContentRootPath, photoPath.TrimStart('/'));
-        if (!File.Exists(fullPhotoPath))
+        // 3. Download reference photo bytes from Cloudinary URL
+        byte[] referencePhotoBytes;
+        try
+        {
+            var httpClient = httpClientFactory.CreateClient();
+            referencePhotoBytes = await httpClient.GetByteArrayAsync(photoUrl);
+        }
+        catch
+        {
             return Result.Failure<VerifyFaceResponse>(VotingErrors.VoterPhotoNotFound);
+        }
 
-        // 3. Decode selfie from Base64
+        // 4. Decode selfie from Base64
         byte[] selfieBytes;
         try
         {
@@ -101,8 +108,8 @@ public class VotingService(
             return Result.Failure<VerifyFaceResponse>(VotingErrors.FaceVerificationFailed);
         }
 
-        // 4. Call Face Recognition Service
-        var isMatch = await faceRecognitionService.VerifyFaceAsync(fullPhotoPath, selfieBytes);
+        // 5. Call Face Recognition Service
+        var isMatch = await faceRecognitionService.VerifyFaceAsync(referencePhotoBytes, selfieBytes);
         if (!isMatch)
             return Result.Failure<VerifyFaceResponse>(VotingErrors.FaceVerificationFailed);
 

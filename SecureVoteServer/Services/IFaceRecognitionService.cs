@@ -6,5 +6,6 @@ public interface IFaceRecognitionService
     /// Compares a stored voter photo with a live selfie.
     /// Returns true if similarity is above threshold (80%).
     /// </summary>
-    Task<bool> VerifyFaceAsync(string storedPhotoPath, byte[] selfieImage);
+    Task<bool> VerifyFaceAsync(byte[] storedPhotoBytes, byte[] selfieImage);
 }
+

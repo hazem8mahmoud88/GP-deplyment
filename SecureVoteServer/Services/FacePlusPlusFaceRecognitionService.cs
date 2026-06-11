@@ -30,15 +30,14 @@ public class FacePlusPlusFaceRecognitionService : IFaceRecognitionService
         _logger = logger;
     }
 
-    public async Task<bool> VerifyFaceAsync(string storedPhotoPath, byte[] selfieImage)
+    public async Task<bool> VerifyFaceAsync(byte[] storedPhotoBytes, byte[] selfieImage)
     {
         try
         {
             using var form = new MultipartFormDataContent();
 
-            // 1. Add the stored reference photo
-            var referenceBytes = await File.ReadAllBytesAsync(storedPhotoPath);
-            var referenceContent = new ByteArrayContent(referenceBytes);
+            // 1. Add the stored reference photo (already as bytes)
+            var referenceContent = new ByteArrayContent(storedPhotoBytes);
             referenceContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
             form.Add(referenceContent, "image_file1", "reference.jpg");
 

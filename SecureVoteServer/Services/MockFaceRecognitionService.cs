@@ -7,7 +7,7 @@ namespace SecureVote.Services;
 /// </summary>
 public class MockFaceRecognitionService : IFaceRecognitionService
 {
-    public Task<bool> VerifyFaceAsync(string storedPhotoPath, byte[] selfieImage)
+    public Task<bool> VerifyFaceAsync(byte[] storedPhotoBytes, byte[] selfieImage)
     {
         // TODO: Replace with real AI service (Face++, Azure, DeepFace)
         // For now, always return true for development

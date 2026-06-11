@@ -191,67 +191,45 @@
   margin-bottom: 2px;
 }
 
-/* 1. Vote Now (صوت الان) -> Matches 'Active' (Emerald Green) */
+/* 1. Vote Now (صوت الان) -> Solid Emerald Green (bg-emerald-600) */
 .btn-vote-now {
-  background: linear-gradient(135deg, #10b981, #059669);
-  /* emerald-500 to emerald-600 */
+  background: #059669;
   color: #fff;
   border: none;
-  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.25);
 }
 
 .btn-vote-now:hover {
-  background: linear-gradient(135deg, #059669, #047857);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  background: #047857;
+  /* hover:bg-emerald-700 */
 }
 
-/* 2. View Results - Closed (عرض النتائج) -> Matches 'Closed' (Slate/Gray) */
-.btn-view-results-closed {
-  background: linear-gradient(135deg, #64748b, #475569);
-  /* slate-500 to slate-600 */
-  color: #fff;
-  border: none;
-  box-shadow: 0 2px 10px rgba(100, 116, 139, 0.25);
-}
-
-.btn-view-results-closed:hover {
-  background: linear-gradient(135deg, #475569, #334155);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(100, 116, 139, 0.35);
-}
-
-/* 3. View Results - Counted (عرض النتائج) -> Matches 'Counted' (Purple/Indigo) */
+/* 2. View Results (عرض النتائج) -> Solid Slate for Closed & Counted (bg-slate-600) */
+.btn-view-results-closed,
 .btn-view-results-counted {
-  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-  /* violet-500 to violet-600 */
+  background: #475569;
   color: #fff;
   border: none;
-  box-shadow: 0 2px 10px rgba(139, 92, 246, 0.25);
 }
 
+.btn-view-results-closed:hover,
 .btn-view-results-counted:hover {
-  background: linear-gradient(135deg, #7c3aed, #6d28d9);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+  background: #334155;
+  /* hover:bg-slate-700 */
 }
 
-/* 4. Details (تفاصيل) -> Outline Style for Admin/Organizer */
+/* 3. Details (تفاصيل) -> Calm Neutral Outline (bg-gray-50) */
 .btn-details {
-  background: transparent;
-  color: #475569;
-  /* slate-600 */
-  border: 1.5px solid #cbd5e1;
-  /* slate-300 */
+  background: #f9fafb;
+  /* bg-gray-50 */
+  color: #374151;
+  /* text-gray-700 */
+  border: 1px solid #d1d5db;
+  /* border-gray-300 */
 }
 
 .btn-details:hover {
-  background: #f8fafc;
-  /* slate-50 */
-  color: #334155;
-  /* slate-700 */
-  border-color: #94a3b8;
-  /* slate-400 */
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(100, 116, 139, 0.08);
+  background: #e5e7eb;
+  /* hover:bg-gray-200 */
+  color: #1f2937;
+  border-color: #9ca3af;
 }

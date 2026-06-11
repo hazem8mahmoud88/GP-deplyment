@@ -1582,6 +1582,14 @@
     gap: 12px;
   }
 
+  .gender-bars-wrapper {
+    width: 100%;
+    flex-basis: 100%;
+    order: 4;
+    margin-top: 8px;
+  }
+
+
   .result-numbers,
   .gov-result-meta {
     justify-content: space-between;
@@ -1606,7 +1614,7 @@
   }
 
   .pct-badge,
-  .gov-pct-badge {
+  .gov-result-meta .gov-pct-badge {
     margin-right: 0;
     padding: 6px 14px;
     font-size: 0.95rem;
@@ -1614,7 +1622,8 @@
     font-weight: 800;
   }
 
-  .bar-track {
+  .candidate-result .bar-track,
+  .gov-candidate-result .bar-track {
     height: 10px;
     border-radius: 5px;
     width: 100%;

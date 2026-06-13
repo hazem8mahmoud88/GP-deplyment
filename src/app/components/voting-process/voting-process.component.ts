@@ -104,7 +104,7 @@ export class VotingProcessComponent implements OnInit, AfterViewChecked {
         } else if (err.error.errors[0] == 'Voting.AlreadyVoted') {
           this.showErrorMessage('لقد قمت بالادلاء بصوتك بالفعل');
           console.log(err)
-        } else if (err.error.errors[0] == 'Voting.ElectionNotActive'){
+        } else if (err.error.errors[0] == 'Voting.ElectionNotActive') {
           this.showErrorMessage('لم يتم تفعيل الانتخابات بعد')
         } else {
           this.showErrorMessage('حدث خطأ');
@@ -177,7 +177,7 @@ export class VotingProcessComponent implements OnInit, AfterViewChecked {
         this.candidates = res;
         this.candidates = this.candidates.map(candidate => ({
           ...candidate,
-          photoPath: candidate.photoPath ? `http://localhost:5197${candidate.photoPath}` : candidate.photoPath
+          photoPath: candidate.photoPath || null
         }));
         console.log(this.candidates)
 
